@@ -485,7 +485,7 @@ MonoBehaviour:
   HoveringMenu: {fileID: 0}
   cardsLayoutGroup: {fileID: 1189013696}
   CardParent: {fileID: 3521003481862539402, guid: fae607d8f0fe0c447b1e3163e1f10ff0, type: 3}
-  CardsFaces:
+  CardPool:
   - {fileID: 6513161764209655990, guid: 949fdcd0def347046b89b1dd8226fff8, type: 3}
   - {fileID: 9043055221513346264, guid: 8cfa412af6a229c45b2550551c68aed1, type: 3}
   - {fileID: 9043055221513346264, guid: 3772123172ee9c242935e5a1887bda11, type: 3}
@@ -497,10 +497,7 @@ MonoBehaviour:
   - {fileID: 653882832374599309, guid: cb35a599cd29c36468f0c9229da1966b, type: 3}
   - {fileID: 4035831483300690367, guid: 527d9606ab203ca4590d0e4de6da7949, type: 3}
   - {fileID: 8915369993430833782, guid: b07cde50ba90cf844b235ff970eafe7f, type: 3}
-  - {fileID: 2163457596865776735, guid: cc5057b3bcd84574e93564945a5adde7, type: 3}
-  - {fileID: 3475463702923293702, guid: acb766795e87a36448b4d6cde8324cfb, type: 3}
-  - {fileID: 4166846275066737962, guid: 4d955b6f42ea3a047a64734a441379c5, type: 3}
-  - {fileID: 4739680755337757692, guid: 46f12e386f9ab644882365b82d7398d6, type: 3}
+  CardCount: 5
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1290,7 +1287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754d7f64af3f9f04aa31a06c218bf581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardsManager: {fileID: 0}
+  cardsManager: {fileID: 199594170}
   SelectedCard: {fileID: 0}
   Cards: []
 --- !u!114 &1189013696
@@ -1305,7 +1302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754d7f64af3f9f04aa31a06c218bf581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardsManager: {fileID: 0}
+  cardsManager: {fileID: 199594170}
   SelectedCard: {fileID: 0}
   Cards: []
 --- !u!1 &1445759882
@@ -1319,6 +1316,7 @@ GameObject:
   - component: {fileID: 1445759883}
   - component: {fileID: 1445759885}
   - component: {fileID: 1445759884}
+  - component: {fileID: 1445759886}
   m_Layer: 5
   m_Name: CardsDiscardBox
   m_TagString: Untagged
@@ -1386,6 +1384,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445759882}
   m_CullTransparentMesh: 1
+--- !u!114 &1445759886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445759882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b697d7f3cc269a4dbe5b04fd32d9b24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardsManager: {fileID: 199594170}
 --- !u!1 &1503227103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1686,6 +1697,7 @@ GameObject:
   - component: {fileID: 1769626211}
   - component: {fileID: 1769626213}
   - component: {fileID: 1769626212}
+  - component: {fileID: 1769626214}
   m_Layer: 5
   m_Name: CardsPlayedTable
   m_TagString: Untagged
@@ -1750,6 +1762,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769626210}
   m_CullTransparentMesh: 1
+--- !u!114 &1769626214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769626210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96b34d6b1c86af949af7c34c1fda640d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardsManager: {fileID: 199594170}
 --- !u!1 &1786878325
 GameObject:
   m_ObjectHideFlags: 0

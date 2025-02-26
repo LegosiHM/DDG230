@@ -29,7 +29,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             //Set booleans
             IsDragging = true;
 
-            cardsManager.GetComponent<AudioSource>().Play();
+            //cardsManager.GetComponent<AudioSource>().Play();
         }
     }
 
@@ -78,7 +78,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             transform.position = transform.parent.position;
         }
 
-        cardsManager.GetComponent<AudioSource>().Play();
+        //cardsManager.GetComponent<AudioSource>().Play();
 
         //Set booleans
         IsDragging = true;
