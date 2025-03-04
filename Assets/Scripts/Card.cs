@@ -12,13 +12,22 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     Canvas canvas;
     public CardsManager cardsManager;
 
+    public CardsPlayedPile cardsPlayedPile;
+
     private void Start()
     {
+        
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         cardsManager = GameObject.Find("CardsManager").GetComponent<CardsManager>();
+        cardsPlayedPile = GameObject.Find("CardsPlayedTable").GetComponent<CardsPlayedPile>();
+
+
+        gameObject.name = transform.parent.name;
+
         cardsManager.cardsLayoutGroup.Cards.Add(gameObject);
         CanDrag = true;
     }
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -58,20 +67,55 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
             cardsManager.cardsLayoutGroup.Cards.Remove(gameObject);
         }
+
         if (cardsManager.HoveringMenu.name.Contains("Played"))
         {
-            CanDrag = false;
-            Played = true;
-            cardsManager.SelectedCard = null;
+            if(cardsPlayedPile.Cards.Count > 0)
+            {
+                GameObject prevCard = cardsPlayedPile.Cards[cardsPlayedPile.Cards.Count - 1];
+                string prevCardCode = prevCard.name;
+                if (gameObject.name[0] == prevCardCode[prevCardCode.Length - 1]) 
+                {
+                    CanDrag = true;
+                    Played = true;
+                    cardsManager.SelectedCard = null;
 
-            transform.parent.position = cardsManager.HoveringMenu.transform.position;
-            transform.parent.SetParent(cardsManager.HoveringMenu.transform);
-            transform.parent.SetSiblingIndex(cardsManager.HoveringMenu.transform.childCount);
+                    transform.parent.position = cardsManager.HoveringMenu.transform.position;
+                    transform.parent.SetParent(cardsManager.HoveringMenu.transform);
+                    transform.parent.SetSiblingIndex(cardsManager.HoveringMenu.transform.childCount);
 
-            transform.position = transform.parent.position;
+                    transform.position = transform.parent.position;
 
-            cardsManager.cardsLayoutGroup.Cards.Remove(gameObject);
+                    cardsManager.cardsLayoutGroup.Cards.Remove(gameObject);
+
+                    cardsPlayedPile.Cards.Add(gameObject);
+                }
+                else
+                {
+                    cardsManager.SelectedCard = null;
+                    transform.position = transform.parent.position;
+                }
+            }
+            else
+            {
+                CanDrag = true;
+                Played = true;
+                cardsManager.SelectedCard = null;
+
+                transform.parent.position = cardsManager.HoveringMenu.transform.position;
+                transform.parent.SetParent(cardsManager.HoveringMenu.transform);
+                transform.parent.SetSiblingIndex(cardsManager.HoveringMenu.transform.childCount);
+
+                transform.position = transform.parent.position;
+
+                cardsManager.cardsLayoutGroup.Cards.Remove(gameObject);
+
+                cardsPlayedPile.Cards.Add(gameObject);
+            }
+
+            
         }
+       
         else
         {
             cardsManager.SelectedCard = null;

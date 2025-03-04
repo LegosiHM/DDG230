@@ -54,6 +54,7 @@ MonoBehaviour:
   target: {fileID: 0}
   rotationSpeed: 25
   rotationAmount: 40
+  cardCode: baa
 --- !u!1 &5967727277431835374
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,10 +9,14 @@ public class CardsManager : MonoBehaviour
     public GameObject HoveringMenu;
 
     public CardsLayoutGroup cardsLayoutGroup;
+    public CardsPlayedPile cardsPlayedPile;
+
 
     public GameObject CardParent;
     public List<GameObject> CardPool = new List<GameObject>();
     private List<GameObject> DiscardPool = new List<GameObject>();
+
+    public string CardName;
 
     [SerializeField] private int CardCount = 4;
     int i = 0;
@@ -50,6 +54,8 @@ public class CardsManager : MonoBehaviour
 
                 cardFace.GetComponent<CardFace>().target = card.GetComponentInChildren<Card>().gameObject;
 
+                CardName = CardPool[randomCard].name;
+                card.name = CardName;
 
                 DiscardPool.Add(CardPool[randomCard]);
                 CardPool.Remove(CardPool[randomCard]);

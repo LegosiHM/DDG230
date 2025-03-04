@@ -14,9 +14,12 @@ public class CardFace : MonoBehaviour
 
     private float randomRot;
 
+    public string cardCode; //to check if can connect with other card
+
     private void Start()
     {
         randomRot = Random.Range(-rotationAmount, rotationAmount);
+
     }
 
     void Update()
@@ -43,5 +46,6 @@ public class CardFace : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, randomRot);
         }
+
     }
 }
