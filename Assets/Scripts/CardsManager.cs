@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,11 +11,12 @@ public class CardsManager : MonoBehaviour
 
     public CardsLayoutGroup cardsLayoutGroup;
     public CardsPlayedPile cardsPlayedPile;
+    public CardsDiscard cardsDiscardBox;
 
 
     public GameObject CardParent;
     public List<GameObject> CardPool = new List<GameObject>();
-    private List<GameObject> DiscardPool = new List<GameObject>();
+    public List<GameObject> DiscardPool = new List<GameObject>();
 
     public string CardName;
 
@@ -22,6 +24,10 @@ public class CardsManager : MonoBehaviour
     int i = 0;
     int fullCardPool;
 
+    int count = 0;
+
+    public int damage;
+    private int damageMult;
 
 
     private void Start()
@@ -64,6 +70,42 @@ public class CardsManager : MonoBehaviour
             i = 0;
 
         }
+    }
+
+    public void PlayCard()
+    {
+        count = 0;
+        damage = 0;
+        damageMult = 1;
+
+        foreach(GameObject card in cardsPlayedPile.Cards)
+        {
+            string cardCode = card.name;
+            if (count==0)
+            {
+                damage+= cardCode.Count();
+                count++;
+
+                card.transform.parent.SetParent(cardsDiscardBox.transform);
+                card.transform.position = cardsDiscardBox.transform.position;
+
+            }
+            else
+            {
+                damage += cardCode.Count() - 1;
+                damageMult++;
+
+                card.transform.parent.SetParent(cardsDiscardBox.transform);
+                card.transform.position = cardsDiscardBox.transform.position;
+            }
+        }
+
+        damage *= damageMult;
+
+        Debug.Log("Card Deal Damage = " + damage);
+
+        cardsPlayedPile.Cards.Clear();
 
     }
+
 }

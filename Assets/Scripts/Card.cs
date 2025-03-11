@@ -73,7 +73,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             if(cardsPlayedPile.Cards.Count > 0)
             {
                 GameObject prevCard = cardsPlayedPile.Cards[cardsPlayedPile.Cards.Count - 1];
-                string prevCardCode = prevCard.name;
+                string prevCardCode = prevCard.name; //check if can connect with previous card
                 if (gameObject.name[0] == prevCardCode[prevCardCode.Length - 1]) 
                 {
                     CanDrag = true;
