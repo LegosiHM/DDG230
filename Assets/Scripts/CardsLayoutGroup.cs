@@ -60,7 +60,7 @@ public class CardsLayoutGroup : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
         targetCard.transform.localPosition = Vector2.zero;
 
-        GetComponent<AudioSource>().Play();
+        //GetComponent<AudioSource>().Play();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
