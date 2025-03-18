@@ -29,7 +29,7 @@ public class CardsPlayedPile : MonoBehaviour, IPointerEnterHandler, IPointerExit
                     {
                         if (SelectedCard.transform.parent.GetSiblingIndex() < Cards[i].transform.parent.GetSiblingIndex())
                         {
-                            SwapCards(SelectedCard, Cards[i]);
+                            //SwapCards(SelectedCard, Cards[i]);
                             break;
                         }
                     }
@@ -38,7 +38,7 @@ public class CardsPlayedPile : MonoBehaviour, IPointerEnterHandler, IPointerExit
                     {
                         if (SelectedCard.transform.parent.GetSiblingIndex() > Cards[i].transform.parent.GetSiblingIndex())
                         {
-                            SwapCards(SelectedCard, Cards[i]);
+                            //SwapCards(SelectedCard, Cards[i]);
                             break;
                         }
                     }
