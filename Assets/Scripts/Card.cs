@@ -14,15 +14,15 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public CardsPlayedPile cardsPlayedPile;
 
+    public string cardCode; //card code based on cardFace
+
     private void Start()
     {
-        
+        cardCode = cardCode.ToLower();
+
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         cardsManager = GameObject.Find("CardsManager").GetComponent<CardsManager>();
         cardsPlayedPile = GameObject.Find("CardsPlayedTable").GetComponent<CardsPlayedPile>();
-
-
-        gameObject.name = transform.parent.name;
 
         cardsManager.cardsLayoutGroup.Cards.Add(gameObject);
         CanDrag = true;
@@ -72,9 +72,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             if(cardsPlayedPile.Cards.Count > 0)
             {
-                GameObject prevCard = cardsPlayedPile.Cards[cardsPlayedPile.Cards.Count - 1];
-                string prevCardCode = prevCard.name; //check if can connect with previous card
-                if (gameObject.name[0] == prevCardCode[prevCardCode.Length - 1]) 
+                GameObject prevCardObject = cardsPlayedPile.Cards[cardsPlayedPile.Cards.Count - 1]; //convert GameObject to Card
+                Card prevCard = prevCardObject.GetComponent<Card>();
+
+                string prevCardCode = prevCard.cardCode; //check if can connect with previous card
+                if (cardCode[0] == prevCardCode[prevCardCode.Length - 1]) 
                 {
                     CanDrag = true;
                     Played = true;
