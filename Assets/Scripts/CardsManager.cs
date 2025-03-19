@@ -18,6 +18,8 @@ public class CardsManager : MonoBehaviour
     public List<GameObject> CardPool = new List<GameObject>();
     public List<GameObject> DiscardPool = new List<GameObject>();
 
+    public string CardName;
+
     [SerializeField] private int CardCount = 4;
     int i = 0;
     int fullCardPool;
@@ -58,8 +60,8 @@ public class CardsManager : MonoBehaviour
 
                 cardFace.GetComponent<CardFace>().target = card.GetComponentInChildren<Card>().gameObject;
 
-                card.GetComponentInChildren<Card>().cardCode = cardFace.GetComponentInChildren<CardFace>().cardCode; //get cardCode from cardFace to card
-                
+                CardName = CardPool[randomCard].name;
+                card.name = CardName;
 
                 DiscardPool.Add(CardPool[randomCard]);
                 CardPool.Remove(CardPool[randomCard]);
@@ -76,11 +78,9 @@ public class CardsManager : MonoBehaviour
         damage = 0;
         damageMult = 1;
 
-        foreach(GameObject cardObject in cardsPlayedPile.Cards)
+        foreach(GameObject card in cardsPlayedPile.Cards)
         {
-            Card card = cardObject.GetComponent<Card>();
-            string cardCode = card.cardCode;
-
+            string cardCode = card.name;
             if (count==0)
             {
                 damage+= cardCode.Count();

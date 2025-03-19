@@ -38,13 +38,13 @@ public class CardFace : MonoBehaviour
             else
                 movementRotation = movement;
             
-            //rotation = Vector3.Lerp(rotation, movementRotation, rotationSpeed * Time.deltaTime);
+            rotation = Vector3.Lerp(rotation, movementRotation, rotationSpeed * Time.deltaTime);
             
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, Mathf.Clamp(movementRotation.x, -rotationAmount, rotationAmount));
         }
         else
         {
-            //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, randomRot);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, randomRot);
         }
 
     }
