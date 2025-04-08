@@ -92,6 +92,8 @@ MonoBehaviour:
   CanDrag: 0
   Played: 0
   cardsManager: {fileID: 0}
+  cardsPlayedPile: {fileID: 0}
+  cardCode: 
 --- !u!1 &3521003481862539402
 GameObject:
   m_ObjectHideFlags: 0

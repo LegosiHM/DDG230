@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -47,14 +48,22 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if (CanDrag)
         {
             //Dragging the object
-            Vector2 position;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)canvas.transform, Input.mousePosition, canvas.worldCamera, out position);
-            transform.position = canvas.transform.TransformPoint(position);
+            Vector2 cardPosition;
+            Vector2 transformPosition = transform.position;
+
+
+            RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)canvas.transform, Input.mousePosition, canvas.worldCamera, out cardPosition);
+            transformPosition.x = canvas.transform.TransformPoint(cardPosition).x;
+            transform.position = transformPosition;
         }
+
+        SelectCard();
     }
+
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        /*
         if (cardsManager.HoveringMenu.name.Contains("Discard"))
         {
             CanDrag = false;
@@ -125,8 +134,62 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
 
         //cardsManager.GetComponent<AudioSource>().Play();
-
+        */
         //Set booleans
+        cardsManager.SelectedCard = null;
+        transform.position = transform.parent.position;
         IsDragging = true;
+    }
+
+    public void SelectCard()
+    {
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            Debug.Log(cardCode);
+            if (cardsPlayedPile.Cards.Count > 0)
+            {
+                GameObject prevCardObject = cardsPlayedPile.Cards[cardsPlayedPile.Cards.Count - 1]; //convert GameObject to Card
+                Card prevCard = prevCardObject.GetComponent<Card>();
+
+                string prevCardCode = prevCard.cardCode; //check if can connect with previous card
+                if (cardCode[0] == prevCardCode[prevCardCode.Length - 1])
+                {
+                    CanDrag = false;
+                    Played = true;
+                    cardsManager.SelectedCard = null;
+
+                    transform.parent.position = cardsManager.cardsPlayedPile.transform.position;
+                    transform.parent.SetParent(cardsManager.cardsPlayedPile.transform);
+                    transform.parent.SetSiblingIndex(cardsManager.cardsPlayedPile.transform.childCount);
+
+                    transform.position = transform.parent.position;
+
+                    cardsManager.cardsLayoutGroup.Cards.Remove(gameObject);
+
+                    cardsPlayedPile.Cards.Add(gameObject);
+                }
+                else
+                {
+                    cardsManager.SelectedCard = null;
+                    transform.position = transform.parent.position;
+                }
+            }
+            else
+            {
+                CanDrag = false;
+                Played = true;
+                cardsManager.SelectedCard = null;
+
+                transform.parent.position = cardsManager.cardsPlayedPile.transform.position;
+                transform.parent.SetParent(cardsManager.cardsPlayedPile.transform);
+                transform.parent.SetSiblingIndex(cardsManager.cardsPlayedPile.transform.childCount);
+
+                transform.position = transform.parent.position;
+
+                cardsManager.cardsLayoutGroup.Cards.Remove(gameObject);
+
+                cardsPlayedPile.Cards.Add(gameObject);
+            }
+        }
     }
 }

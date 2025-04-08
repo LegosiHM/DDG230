@@ -18,6 +18,8 @@ public class CardsManager : MonoBehaviour
     public List<GameObject> CardPool = new List<GameObject>();
     public List<GameObject> DiscardPool = new List<GameObject>();
 
+    public GameObject CardVisualLayout;
+
     [SerializeField] private int CardCount = 4;
     int i = 0;
     int fullCardPool;
@@ -68,9 +70,11 @@ public class CardsManager : MonoBehaviour
             while (cardsLayoutGroup.transform.childCount < CardCount)
             {
                 GameObject card = Instantiate(CardParent, cardsLayoutGroup.transform);
+                
 
                 int randomCard = Random.Range(0, CardPool.Count);
-                GameObject cardFace = Instantiate(CardPool[randomCard], GameObject.Find("CardVisuals").transform);
+
+                GameObject cardFace = Instantiate(CardPool[randomCard], CardVisualLayout.transform);
 
                 cardFace.GetComponent<CardFace>().target = card.GetComponentInChildren<Card>().gameObject;
 
@@ -123,12 +127,67 @@ public class CardsManager : MonoBehaviour
         {
             Card card = cardObject.GetComponent<Card>();
 
-                card.transform.parent.SetParent(cardsDiscardBox.transform);
-                card.transform.position = cardsDiscardBox.transform.position;
+            card.transform.parent.SetParent(cardsDiscardBox.transform);
 
+            card.transform.position = cardsDiscardBox.transform.position;
         }
 
         cardsPlayedPile.Cards.Clear();
     }
+
+    public void FlipCard()
+    {
+
+        //Flip Visual
+        foreach (GameObject cardObject in cardsLayoutGroup.Cards)
+        {
+            foreach(Transform cardFace in CardVisualLayout.transform)
+            {
+                if (cardFace.GetComponent<CardFace>().target == cardObject)
+                {
+                    Vector3 cardTransformScale = cardFace.transform.localScale;
+                    cardTransformScale.x *= -1;
+                    cardFace.transform.localScale = cardTransformScale;
+                }
+            }
+        }
+
+
+        foreach (GameObject cardObject in cardsLayoutGroup.Cards)
+        {
+            Card card = cardObject.GetComponentInChildren<Card>();
+            char firstCode = card.cardCode[0];
+            char LastCode = card.cardCode[card.cardCode.Length - 1];
+
+            char newFirstCode = LastCode;
+            char newLastCode = firstCode;
+
+            if (card.cardCode.Length > 2)
+            {
+                string betweenCode = card.cardCode.Substring(1, card.cardCode.Length - 2);
+
+                
+
+                card.cardCode = newFirstCode.ToString() + betweenCode.ToString() + newLastCode.ToString();
+            }
+            else
+            {
+                card.cardCode = newFirstCode.ToString() + newLastCode.ToString();
+            }
+        }
+            /*
+        foreach (Card cardObject in cardsLayoutGroup.transform)
+        {
+            char firstCode = cardObject.cardCode[0];
+            char LastCode = cardObject.cardCode[cardObject.cardCode.Length];
+            string betweenCode = cardObject.cardCode.Substring(1,cardObject.cardCode.Length-1);
+
+            char newFirstCode = LastCode;
+            char newLastCode = firstCode;
+
+            cardObject.cardCode = newFirstCode + betweenCode + newLastCode;
+        }*/
+    }
+
 
 }
