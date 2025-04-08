@@ -5,18 +5,28 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public Image hpFill; //Assign the HP_Fill Image in the Inspector
-    public float maxHealth = 100f;
+    [SerializeField] private Image hpFill; //Assign the HP_Fill Image in the Inspector
+    [SerializeField] private float maxHealth = 100f;
+    public float _maxHealth;
+
     private float currentHealth;
+    public float _currentHealth;
 
 
-    public CardsManager cardsManager;
-    public EnemyManager enemyManager;
+    [SerializeField] private CardsManager cardsManager;
+    [SerializeField] private EnemyManager enemyManager;
 
     void Start()
     {
+        _maxHealth = maxHealth;
+
         currentHealth = maxHealth;
         UpdateHealthBar();
+    }
+
+    private void Update()
+    {
+        _currentHealth = currentHealth;
     }
 
     public void TakeDamage(float damage)
@@ -28,8 +38,8 @@ public class HealthBar : MonoBehaviour
         }
         if (gameObject.transform.name.Contains("Enemy"))
         {
-            Debug.Log("enemyTakeDMG");
-            damage = cardsManager.damage;
+            Debug.Log("enemyTakeDMG: " + cardsManager.damageResult);
+            damage = cardsManager.damageResult;
         }
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
@@ -38,7 +48,8 @@ public class HealthBar : MonoBehaviour
         UpdateHealthBar();
     }
 
-    void UpdateHealthBar()
+    
+    private void UpdateHealthBar()
     {
         hpFill.fillAmount = currentHealth/maxHealth;
     }

@@ -19,6 +19,7 @@ public class CardsPlayedPile : MonoBehaviour, IPointerEnterHandler, IPointerExit
         else
             SelectedCard = null;
 
+        /*
         if (SelectedCard)
         {
             if (cardsManager.HoveringMenu == gameObject)
@@ -34,7 +35,7 @@ public class CardsPlayedPile : MonoBehaviour, IPointerEnterHandler, IPointerExit
                         }
                     }
 
-                    if (SelectedCard.transform.position.x < Cards[i].transform.position.x)
+                    /*if (SelectedCard.transform.position.x < Cards[i].transform.position.x)
                     {
                         if (SelectedCard.transform.parent.GetSiblingIndex() > Cards[i].transform.parent.GetSiblingIndex())
                         {
@@ -42,35 +43,37 @@ public class CardsPlayedPile : MonoBehaviour, IPointerEnterHandler, IPointerExit
                             break;
                         }
                     }
+                    
                 }
             }
-
-        }
-
-        /*
-        Card[] playedCard = gameObject.GetComponentsInChildren<Card>();
-
-        foreach (Card card in playedCard)
-        {
-            if (Cards.Contains(card.gameObject))
-            {
-                Debug.Log("repeat");
-                continue;
-            }
-            else
-            {
-                Cards.Add(card.gameObject); ;
-            }
-        }
         */
 
+    
 
+    /*
+    Card[] playedCard = gameObject.GetComponentsInChildren<Card>();
+
+    foreach (Card card in playedCard)
+    {
+        if (Cards.Contains(card.gameObject))
+        {
+            Debug.Log("repeat");
+            continue;
+        }
+        else
+        {
+            Cards.Add(card.gameObject); ;
+        }
     }
+    */
 
 
+}
+
+/*
     public void SwapCards(GameObject currentCard, GameObject targetCard)
     {
-        /*
+        
         Transform currentCardParent = currentCard.transform.parent;
         Transform targetedCardParent = targetCard.transform.parent;
 
@@ -85,10 +88,11 @@ public class CardsPlayedPile : MonoBehaviour, IPointerEnterHandler, IPointerExit
         targetCard.transform.localPosition = Vector2.zero;
 
         //GetComponent<AudioSource>().Play();
-        */
+        
     }
+*/
 
-    public void OnPointerEnter(PointerEventData eventData)
+public void OnPointerEnter(PointerEventData eventData)
     {
         cardsManager.HoveringMenu = gameObject;
     }

@@ -24,14 +24,30 @@ public class CardsManager : MonoBehaviour
 
     int count = 0;
 
+    private int _damage;
     public int damage;
-    private int damageMult;
+
+    private int _damageMult;
+    public int damageMult;
+
+    private int _damageResult;
+    public int damageResult;
 
 
     private void Start()
     {
         fullCardPool = CardPool.Count;
         AddCard();
+
+        
+    }
+
+    private void Update()
+    {
+        CalculateDMG();
+        damage = _damage;
+        damageMult = _damageMult;
+        damageResult = _damageResult;
     }
 
     public void AddCard()
@@ -70,42 +86,49 @@ public class CardsManager : MonoBehaviour
         }
     }
 
-    public void PlayCard()
+
+    public void CalculateDMG()
     {
         count = 0;
-        damage = 0;
-        damageMult = 1;
+        _damage = 0;
+        _damageMult = 1;
+        _damageResult = 0;
 
-        foreach(GameObject cardObject in cardsPlayedPile.Cards)
+        foreach (GameObject cardObject in cardsPlayedPile.Cards)
         {
             Card card = cardObject.GetComponent<Card>();
             string cardCode = card.cardCode;
 
-            if (count==0)
+            if (count == 0)
             {
-                damage+= cardCode.Count();
+                _damage += cardCode.Count();
                 count++;
-
-                card.transform.parent.SetParent(cardsDiscardBox.transform);
-                card.transform.position = cardsDiscardBox.transform.position;
-
             }
             else
             {
-                damage += cardCode.Count() - 1;
-                damageMult++;
-
-                card.transform.parent.SetParent(cardsDiscardBox.transform);
-                card.transform.position = cardsDiscardBox.transform.position;
+                _damage += cardCode.Count() - 1;
+                _damageMult++;
             }
         }
 
-        damage *= damageMult;
+        _damageResult = _damage * _damageMult;
+    }
 
-        Debug.Log("Card Deal Damage = " + damage);
+
+
+
+    public void PlayCard()
+    {
+        foreach (GameObject cardObject in cardsPlayedPile.Cards)
+        {
+            Card card = cardObject.GetComponent<Card>();
+
+                card.transform.parent.SetParent(cardsDiscardBox.transform);
+                card.transform.position = cardsDiscardBox.transform.position;
+
+        }
 
         cardsPlayedPile.Cards.Clear();
-
     }
 
 }
