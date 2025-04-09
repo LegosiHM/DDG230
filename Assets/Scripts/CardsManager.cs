@@ -50,23 +50,13 @@ public class CardsManager : MonoBehaviour
         damage = _damage;
         damageMult = _damageMult;
         damageResult = _damageResult;
+
+        ResetPool();
     }
 
     public void AddCard()
     {
-        if(CardPool.Count < CardCount - cardsLayoutGroup.transform.childCount) //if pool < empty hand
-        {
-            while (i < fullCardPool && DiscardPool.Count > 0) //reset pool
-            {
-                CardPool.Add(DiscardPool[0]);
-                DiscardPool.RemoveAt(0);
-                i++;
-            }
-
-            i = 0;
-        }
-        else
-        {
+        
             while (cardsLayoutGroup.transform.childCount < CardCount)
             {
                 GameObject card = Instantiate(CardParent, cardsLayoutGroup.transform);
@@ -87,9 +77,23 @@ public class CardsManager : MonoBehaviour
 
             i = 0;
 
-        }
+        
     }
 
+    public void ResetPool()
+    {
+        if (CardPool.Count < CardCount - cardsLayoutGroup.transform.childCount) //if pool < empty hand
+        {
+            while (i < fullCardPool && DiscardPool.Count > 0) //reset pool
+            {
+                CardPool.Add(DiscardPool[0]);
+                DiscardPool.RemoveAt(0);
+                i++;
+            }
+
+            i = 0;
+        }
+    }
 
     public void CalculateDMG()
     {

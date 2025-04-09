@@ -9,16 +9,16 @@ public class CardFace : MonoBehaviour
     public float rotationSpeed;
     public float rotationAmount;
 
-    Vector3 rotation;
+    //Vector3 rotation;
     Vector3 movement;
 
-    private float randomRot;
+    //private float randomRot;
 
     public string cardCode; //to check if can connect with other card
 
     private void Start()
     {
-        randomRot = Random.Range(-rotationAmount, rotationAmount);
+        //randomRot = Random.Range(-rotationAmount, rotationAmount);
 
     }
 
@@ -29,18 +29,19 @@ public class CardFace : MonoBehaviour
         if (!target.GetComponent<Card>().Played)
         {   
             Vector3 pos = (transform.position - target.transform.position);
-            Vector3 movementRotation;
+            //Vector3 movementRotation;
             
             movement = Vector3.Lerp(movement, pos, 25 * Time.deltaTime);
             
+            /*
             if (target.GetComponent<Card>().IsDragging)
                 movementRotation = movement;
             else
                 movementRotation = movement;
-            
+            */
             //rotation = Vector3.Lerp(rotation, movementRotation, rotationSpeed * Time.deltaTime);
             
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, Mathf.Clamp(movementRotation.x, -rotationAmount, rotationAmount));
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y); //, Mathf.Clamp(movementRotation.x, -rotationAmount, rotationAmount));
         }
         else
         {
