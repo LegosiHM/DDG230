@@ -2,36 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyManager : MonoBehaviour
 {
-    public int turn = 1;
-    public float damage;
+    [SerializeField] private float enemyBaseDMG;
+    [SerializeField] private List<UnityEvent> enemyMoveset = new List<UnityEvent>();
+
+    [HideInInspector] public int turn = 1;
+    [HideInInspector] public float damage;
 
     public void TurnAttack()
     {
-        if(turn == 1)
-        {
-            damage = 3f;
-            turn++;
-            return; 
-        }
+        enemyMoveset[turn-1].Invoke();
 
-        if (turn == 2)
+        if(turn < enemyMoveset.Count)
         {
-            damage = 4f;
             turn++;
             return;
-
         }
-
-        if (turn == 3)
+        else
         {
-            damage = 5f;
             turn = 1;
             return;
-
         }
 
+    }
+
+    public void Attack()
+    {
+        damage = enemyBaseDMG + ((enemyBaseDMG/2) * (turn - 1)); //increase DMG by 50% if baseDamage after each turn. (reset when use all movesets)
+        //Debug.Log("enemyDMG = " + damage.ToString());
+    }
+
+    public void PlaceCard()
+    {
+        Debug.Log("I placecard");
+    }
+
+    public void Debuff()
+    {
+        Debug.Log("I debuff");
     }
 }
