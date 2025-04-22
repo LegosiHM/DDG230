@@ -131,8 +131,8 @@ public class CardsManager : MonoBehaviour
         {
             Card card = cardObject.GetComponent<Card>();
 
+            card.Played = false;
             card.transform.parent.SetParent(cardsDiscardBox.transform);
-
             card.transform.position = cardsDiscardBox.transform.position;
         }
 

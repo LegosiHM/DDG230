@@ -29,6 +29,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         CanDrag = true;
     }
 
+    private void Update()
+    {
+        DeselectCard();
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (CanDrag)
@@ -169,6 +174,20 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
     }
 
+    public void DeselectCard()
+    {
+        if (Played)
+        {
+            if (cardsPlayedPile != null)
+            {
+                if (Input.GetMouseButtonUp(1))
+                {
+                    MoveCardToHand();
+                }
+            }
+        }
+    }
+
     public void MoveCardToPlay()
     {
         CanDrag = false;
@@ -184,6 +203,23 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         cardsManager.cardsLayoutGroup.Cards.Remove(gameObject);
 
         cardsPlayedPile.Cards.Add(gameObject);
+    }
+
+    public void MoveCardToHand()
+    {
+        CanDrag = true;
+        Played = false;
+        cardsManager.SelectedCard = null;
+
+        transform.parent.position = cardsManager.cardsLayoutGroup.transform.position;
+        transform.parent.SetParent(cardsManager.cardsLayoutGroup.transform);
+        transform.parent.SetSiblingIndex(cardsManager.cardsLayoutGroup.transform.childCount);
+
+        transform.position = transform.parent.position;
+
+        cardsPlayedPile.Cards.Remove(gameObject);
+        cardsManager.cardsLayoutGroup.Cards.Add(gameObject);
+
     }
 
 }
