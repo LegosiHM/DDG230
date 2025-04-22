@@ -29,7 +29,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         CanDrag = true;
     }
 
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (CanDrag)
@@ -57,7 +56,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             transform.position = transformPosition;
         }
 
-        SelectCard();
+        //SelectCard();
     }
 
 
@@ -138,35 +137,24 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         //Set booleans
         cardsManager.SelectedCard = null;
         transform.position = transform.parent.position;
-        IsDragging = true;
+        IsDragging = false;
     }
 
     public void SelectCard()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (IsDragging == false)
         {
-            Debug.Log(cardCode);
+            //Debug.Log(cardCode);
             if (cardsPlayedPile.Cards.Count > 0)
             {
                 GameObject prevCardObject = cardsPlayedPile.Cards[cardsPlayedPile.Cards.Count - 1]; //convert GameObject to Card
                 Card prevCard = prevCardObject.GetComponent<Card>();
 
                 string prevCardCode = prevCard.cardCode; //check if can connect with previous card
-                if (cardCode[0] == prevCardCode[prevCardCode.Length - 1])
+
+                if (cardCode[0] == prevCardCode[prevCardCode.Length - 1]) //not first card
                 {
-                    CanDrag = false;
-                    Played = true;
-                    cardsManager.SelectedCard = null;
-
-                    transform.parent.position = cardsManager.cardsPlayedPile.transform.position;
-                    transform.parent.SetParent(cardsManager.cardsPlayedPile.transform);
-                    transform.parent.SetSiblingIndex(cardsManager.cardsPlayedPile.transform.childCount);
-
-                    transform.position = transform.parent.position;
-
-                    cardsManager.cardsLayoutGroup.Cards.Remove(gameObject);
-
-                    cardsPlayedPile.Cards.Add(gameObject);
+                    MoveCardToPlay();
                 }
                 else
                 {
@@ -176,20 +164,26 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             }
             else
             {
-                CanDrag = false;
-                Played = true;
-                cardsManager.SelectedCard = null;
-
-                transform.parent.position = cardsManager.cardsPlayedPile.transform.position;
-                transform.parent.SetParent(cardsManager.cardsPlayedPile.transform);
-                transform.parent.SetSiblingIndex(cardsManager.cardsPlayedPile.transform.childCount);
-
-                transform.position = transform.parent.position;
-
-                cardsManager.cardsLayoutGroup.Cards.Remove(gameObject);
-
-                cardsPlayedPile.Cards.Add(gameObject);
+                MoveCardToPlay(); //first card => no restriction
             }
         }
     }
+
+    public void MoveCardToPlay()
+    {
+        CanDrag = false;
+        Played = true;
+        cardsManager.SelectedCard = null;
+
+        transform.parent.position = cardsManager.cardsPlayedPile.transform.position;
+        transform.parent.SetParent(cardsManager.cardsPlayedPile.transform);
+        transform.parent.SetSiblingIndex(cardsManager.cardsPlayedPile.transform.childCount);
+
+        transform.position = transform.parent.position;
+
+        cardsManager.cardsLayoutGroup.Cards.Remove(gameObject);
+
+        cardsPlayedPile.Cards.Add(gameObject);
+    }
+
 }
