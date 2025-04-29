@@ -10,6 +10,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public bool IsDragging;
     public bool CanDrag;
     public bool Played;
+
+    public bool IsLockedByEnemy;
+
     Canvas canvas;
     public CardsManager cardsManager;
 
@@ -21,9 +24,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         cardCode = cardCode.ToLower();
 
-        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        cardsManager = GameObject.Find("CardsManager").GetComponent<CardsManager>();
-        cardsPlayedPile = GameObject.Find("CardsPlayedTable").GetComponent<CardsPlayedPile>();
+        canvas = FindObjectOfType<Canvas>();
+        cardsManager = Canvas.FindAnyObjectByType<CardsManager>();
+        cardsPlayedPile = Canvas.FindAnyObjectByType<CardsPlayedPile>();
 
         cardsManager.cardsLayoutGroup.Cards.Add(gameObject);
         CanDrag = true;
@@ -180,9 +183,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             if (cardsPlayedPile != null)
             {
-                if (Input.GetMouseButtonUp(1))
+                if(IsLockedByEnemy == false)
                 {
-                    MoveCardToHand();
+                    if (Input.GetMouseButtonUp(1))
+                    {
+                        MoveCardToHand();
+                    }
                 }
             }
         }

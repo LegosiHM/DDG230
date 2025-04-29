@@ -34,11 +34,11 @@ public class HealthBar : MonoBehaviour
         if (gameObject.transform.name.Contains("Player"))
         {
             damage = enemyManager.damage;
-            Debug.Log("playerTakeDMG"+ "damage = " + enemyManager.damage + " Turn = " + enemyManager.turn);
+            //Debug.Log("playerTakeDMG"+ "damage = " + enemyManager.damage + " Turn = " + enemyManager.turn);
         }
         if (gameObject.transform.name.Contains("Enemy"))
         {
-            Debug.Log("enemyTakeDMG: " + cardsManager.damageResult);
+            //Debug.Log("enemyTakeDMG: " + cardsManager.damageResult);
             damage = cardsManager.damageResult;
         }
         currentHealth -= damage;

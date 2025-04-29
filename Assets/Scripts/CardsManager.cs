@@ -9,10 +9,12 @@ public class CardsManager : MonoBehaviour
     public GameObject SelectedCard;
     public GameObject HoveringMenu;
 
+
     public CardsLayoutGroup cardsLayoutGroup;
     public CardsPlayedPile cardsPlayedPile;
     public CardsDiscard cardsDiscardBox;
 
+    private EnemyManager enemyManager;
 
     public GameObject CardParent;
     public List<GameObject> CardPool = new List<GameObject>();
@@ -20,24 +22,26 @@ public class CardsManager : MonoBehaviour
 
     public GameObject CardVisualLayout;
 
-    [SerializeField] private int CardCount = 4;
+    [SerializeField] private int MaxCardOnHand = 4;
+
     int i = 0;
     int fullCardPool;
 
     int count = 0;
 
     private int _damage;
-    public int damage;
+    public int damage => _damage;
 
     private int _damageMult;
-    public int damageMult;
+    public int damageMult => _damageMult;
 
     private int _damageResult;
-    public int damageResult;
-
+    public int damageResult => _damageResult;
 
     private void Start()
     {
+        enemyManager = Canvas.FindAnyObjectByType<EnemyManager>();
+
         fullCardPool = CardPool.Count;
         AddCard();
 
@@ -47,17 +51,13 @@ public class CardsManager : MonoBehaviour
     private void Update()
     {
         CalculateDMG();
-        damage = _damage;
-        damageMult = _damageMult;
-        damageResult = _damageResult;
 
         ResetPool();
     }
 
     public void AddCard()
     {
-        
-            while (cardsLayoutGroup.transform.childCount < CardCount)
+            while (cardsLayoutGroup.transform.childCount < MaxCardOnHand)
             {
                 GameObject card = Instantiate(CardParent, cardsLayoutGroup.transform);
                 
@@ -82,7 +82,7 @@ public class CardsManager : MonoBehaviour
 
     public void ResetPool()
     {
-        if (CardPool.Count < CardCount - cardsLayoutGroup.transform.childCount) //if pool < empty hand
+        if (CardPool.Count < MaxCardOnHand - cardsLayoutGroup.transform.childCount) //if pool < empty hand
         {
             while (i < fullCardPool && DiscardPool.Count > 0) //reset pool
             {
@@ -127,16 +127,40 @@ public class CardsManager : MonoBehaviour
 
     public void PlayCard()
     {
-        foreach (GameObject cardObject in cardsPlayedPile.Cards)
+        if(cardsPlayedPile.Cards.Count > 0)
         {
-            Card card = cardObject.GetComponent<Card>();
+            if(cardsPlayedPile.Cards.Count > 1) //more than 1 card played
+            {
+                foreach (GameObject cardObject in cardsPlayedPile.Cards)
+                {
+                    enemyManager.turnWithLockedCard = 0;
+                    enemyManager.HoldLockedCard = false;
+                    MoveCardToDiscard(cardObject);
+                }
 
-            card.Played = false;
-            card.transform.parent.SetParent(cardsDiscardBox.transform);
-            card.transform.position = cardsDiscardBox.transform.position;
+                cardsPlayedPile.Cards.Clear();
+            }
+            else if (cardsPlayedPile.Cards.Count == 1) //only 1 card played
+            {
+                foreach (GameObject cardObject in cardsPlayedPile.Cards)
+                {
+                    if (cardObject.GetComponent<Card>().IsLockedByEnemy == false) //not locked by enemy
+                    {
+                        MoveCardToDiscard(cardObject);
+                        cardsPlayedPile.Cards.Clear();
+                    }
+                    else //locked by enemy
+                    {
+                        //cardObject.GetComponent<Card>().MoveCardToPlay();
+                        Debug.Log("LockedCard");
+                    }
+                }
+            }
         }
-
-        cardsPlayedPile.Cards.Clear();
+        else
+        {
+            Debug.Log("No Card Played");
+        }
     }
 
     public void FlipCard()
@@ -179,19 +203,15 @@ public class CardsManager : MonoBehaviour
                 card.cardCode = newFirstCode.ToString() + newLastCode.ToString();
             }
         }
-            /*
-        foreach (Card cardObject in cardsLayoutGroup.transform)
-        {
-            char firstCode = cardObject.cardCode[0];
-            char LastCode = cardObject.cardCode[cardObject.cardCode.Length];
-            string betweenCode = cardObject.cardCode.Substring(1,cardObject.cardCode.Length-1);
-
-            char newFirstCode = LastCode;
-            char newLastCode = firstCode;
-
-            cardObject.cardCode = newFirstCode + betweenCode + newLastCode;
-        }*/
     }
 
+    public void MoveCardToDiscard(GameObject cardObject)
+    {
+        Card card = cardObject.GetComponent<Card>();
+
+        card.Played = false;
+        card.transform.parent.SetParent(cardsDiscardBox.transform);
+        card.transform.position = cardsDiscardBox.transform.position;
+    }
 
 }

@@ -9,14 +9,37 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float enemyBaseDMG;
     [SerializeField] private List<UnityEvent> enemyMoveset = new List<UnityEvent>();
 
-    [HideInInspector] public int turn = 1;
+    [HideInInspector] public int turn = 0;
     [HideInInspector] public float damage;
+
+    [HideInInspector] public int turnWithLockedCard = 1;
+    [HideInInspector] public bool HoldLockedCard = false;
+
+    private CardsLayoutGroup cardsLayoutGroup;
+    private CardsManager cardsManager;
+    private CardsPlayedPile cardsPlayedPile;
+
+
+    private void Awake()
+    {
+        cardsLayoutGroup = Canvas.FindAnyObjectByType<CardsLayoutGroup>();
+        cardsManager = Canvas.FindAnyObjectByType<CardsManager>();
+        cardsPlayedPile = Canvas.FindAnyObjectByType<CardsPlayedPile>();
+    }
 
     public void TurnAttack()
     {
+        damage = 0;
         enemyMoveset[turn-1].Invoke();
 
-        if(turn < enemyMoveset.Count)
+        if(HoldLockedCard == true)
+        {
+            Debug.Log(HoldLockedCard);
+            turnWithLockedCard++;
+            damage = ((enemyBaseDMG / 2) * turnWithLockedCard);
+        }
+
+        if (turn < enemyMoveset.Count)
         {
             turn++;
             return;
@@ -35,13 +58,59 @@ public class EnemyManager : MonoBehaviour
         //Debug.Log("enemyDMG = " + damage.ToString());
     }
 
-    public void PlaceCard()
+    public void LockCard()
     {
-        Debug.Log("I place card");
+        if(cardsLayoutGroup.Cards.Count > 0) //check if have cards in hand
+        {
+            if (cardsPlayedPile.Cards.Count == 0) //check if have no card on cardsPlayedPile
+            {
+                int randomNumber = Random.Range(0, cardsLayoutGroup.Cards.Count - 1);
+
+                GameObject randomCard = cardsLayoutGroup.Cards[randomNumber];
+
+
+                randomCard.GetComponent<Card>().IsLockedByEnemy = true;
+                randomCard.GetComponent<Card>().MoveCardToPlay();
+            }
+            else
+            {
+                Attack();
+            }
+        }
+        else
+        {
+            Attack();
+        }
     }
 
-    public void Debuff()
+    public void LockCardWithDMG()
     {
-        Debug.Log("I debuff");
+        if (cardsLayoutGroup.Cards.Count > 0) //check if have cards in hand
+        {
+            if (cardsPlayedPile.Cards.Count == 0) //check if have no card on cardsPlayedPile
+            {
+                int randomNumber = Random.Range(0, cardsLayoutGroup.Cards.Count - 1);
+
+                GameObject randomCard = cardsLayoutGroup.Cards[randomNumber];
+
+
+                randomCard.GetComponent<Card>().IsLockedByEnemy = true;
+                randomCard.GetComponent<Card>().MoveCardToPlay();
+                HoldLockedCard = true;
+            }
+            else //already hold card
+            {
+                Debug.Log(turnWithLockedCard.ToString());
+            }
+        }
+        else //no card on hand
+        {
+            //Attack();
+        }
+    }
+
+    public void EmptyMove()
+    {
+        Debug.Log("No Enemy Moveset");
     }
 }
