@@ -53,4 +53,9 @@ public class HealthBar : MonoBehaviour
     {
         hpFill.fillAmount = currentHealth/maxHealth;
     }
+
+    public float GetDamageTaken()
+    {
+        return _maxHealth - _currentHealth;
+    }
 }

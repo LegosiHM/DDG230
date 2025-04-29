@@ -37,7 +37,7 @@ public class EnemyManager : MonoBehaviour
 
     public void PlaceCard()
     {
-        Debug.Log("I placecard");
+        Debug.Log("I place card");
     }
 
     public void Debuff()
