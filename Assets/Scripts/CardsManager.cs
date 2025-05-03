@@ -142,19 +142,31 @@ public class CardsManager : MonoBehaviour
             }
             else if (cardsPlayedPile.Cards.Count == 1) //only 1 card played
             {
-                foreach (GameObject cardObject in cardsPlayedPile.Cards)
+                /*
+                    foreach (GameObject cardObject in cardsPlayedPile.Cards)
+                    {
+                        if (cardObject.GetComponent<Card>().IsLockedByEnemy == false) //not locked by enemy
+                        {
+                            MoveCardToDiscard(cardObject);
+                            cardsPlayedPile.Cards.Clear();
+                        }
+                        else //locked by enemy
+                        {
+                            Debug.Log("LockedCard");
+                        }
+                    }
+
+                */
+                if (cardsPlayedPile.Cards[0].GetComponent<Card>().IsLockedByEnemy == false) //not locked by enemy
                 {
-                    if (cardObject.GetComponent<Card>().IsLockedByEnemy == false) //not locked by enemy
-                    {
-                        MoveCardToDiscard(cardObject);
-                        cardsPlayedPile.Cards.Clear();
-                    }
-                    else //locked by enemy
-                    {
-                        //cardObject.GetComponent<Card>().MoveCardToPlay();
-                        Debug.Log("LockedCard");
-                    }
+                    MoveCardToDiscard(cardsPlayedPile.Cards[0]);
+                    cardsPlayedPile.Cards.Clear();
                 }
+                else //locked by enemy
+                {
+                    Debug.Log("LockedCard");
+                }
+
             }
         }
         else
