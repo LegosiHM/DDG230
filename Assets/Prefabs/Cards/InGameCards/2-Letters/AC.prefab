@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 6513161764209655991}
   - component: {fileID: 6513161764209655989}
   m_Layer: 5
-  m_Name: AB
+  m_Name: AC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   target: {fileID: 0}
   rotationSpeed: 25
   rotationAmount: 40
-  cardCode: ab
+  cardCode: ac
 --- !u!1 &6513161764282531386
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -836221196, guid: 3f2891ad61d3bc94db08b1162ff1885f, type: 3}
+  m_Sprite: {fileID: 1143693130, guid: 3f2891ad61d3bc94db08b1162ff1885f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -422,7 +422,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -836221196, guid: 3f2891ad61d3bc94db08b1162ff1885f, type: 3}
+  m_Sprite: {fileID: 1143693130, guid: 3f2891ad61d3bc94db08b1162ff1885f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
