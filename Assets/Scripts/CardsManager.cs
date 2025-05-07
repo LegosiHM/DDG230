@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class CardsManager : MonoBehaviour
 {
-    public GameObject SelectedCard;
-    public GameObject HoveringMenu;
+    [HideInInspector] public GameObject SelectedCard;
+    [HideInInspector] public GameObject HoveringMenu;
 
 
     public CardsLayoutGroup cardsLayoutGroup;
@@ -16,51 +16,67 @@ public class CardsManager : MonoBehaviour
 
     private EnemyManager enemyManager;
 
+    [HideInInspector]
     public GameObject CardParent;
-    public List<GameObject> CardPool = new List<GameObject>();
-    public List<GameObject> DiscardPool = new List<GameObject>();
 
-    public GameObject CardVisualLayout;
+    [SerializeField] private List<GameObject> CardPool = new List<GameObject>();
+    [SerializeField] private List<GameObject> DiscardPool = new List<GameObject>();
 
-    [SerializeField] private int MaxCardOnHand = 4;
+    [HideInInspector] public GameObject CardVisualLayout;
 
-    int i = 0;
-    int fullCardPool;
+    [SerializeField] private int _maxCardOnHand = 4;
+    [SerializeField] private int _flipChance = 5;
+    [HideInInspector] public int flipChance => _flipChance;
+    
+    [SerializeField] private int _redrawChance = 5;
+    [HideInInspector] public int redrawChance => _redrawChance;
 
-    int count = 0;
+    private int i = 0;
+    private int fullCardPool => CardPool.Count;
+
+    private int count = 0;
 
     private int _damage;
-    public int damage => _damage;
+    [HideInInspector] public int damage => _damage;
 
     private int _damageMult;
-    public int damageMult => _damageMult;
+    [HideInInspector] public int damageMult => _damageMult;
 
     private int _damageResult;
-    public int damageResult => _damageResult;
+    [HideInInspector] public int damageResult => _damageResult;
+
 
     private void Start()
     {
         enemyManager = Canvas.FindAnyObjectByType<EnemyManager>();
 
-        fullCardPool = CardPool.Count;
         AddCard();
-
-        
     }
 
     private void Update()
     {
         CalculateDMG();
+    }
 
-        ResetPool();
+    public void DrawCard()
+    {
+        if(CardPool.Count <= _maxCardOnHand - cardsLayoutGroup.transform.childCount)
+        {
+            ResetPool();
+            AddCard();
+        }
+        else
+        {
+            AddCard();
+        }
     }
 
     public void AddCard()
     {
-            while (cardsLayoutGroup.transform.childCount < MaxCardOnHand)
+            while (cardsLayoutGroup.transform.childCount < _maxCardOnHand)
             {
                 GameObject card = Instantiate(CardParent, cardsLayoutGroup.transform);
-                
+
 
                 int randomCard = Random.Range(0, CardPool.Count);
 
@@ -69,30 +85,26 @@ public class CardsManager : MonoBehaviour
                 cardFace.GetComponent<CardFace>().target = card.GetComponentInChildren<Card>().gameObject;
 
                 card.GetComponentInChildren<Card>().cardCode = cardFace.GetComponentInChildren<CardFace>().cardCode; //get cardCode from cardFace to card
-                
+
 
                 DiscardPool.Add(CardPool[randomCard]);
                 CardPool.Remove(CardPool[randomCard]);
             }
 
             i = 0;
-
-        
     }
 
     public void ResetPool()
     {
-        if (CardPool.Count < MaxCardOnHand - cardsLayoutGroup.transform.childCount) //if pool < empty hand
-        {
             while (i < fullCardPool && DiscardPool.Count > 0) //reset pool
             {
+                //Debug.Log("ResetPool");
                 CardPool.Add(DiscardPool[0]);
                 DiscardPool.RemoveAt(0);
                 i++;
             }
 
             i = 0;
-        }
     }
 
     public void CalculateDMG()
@@ -178,42 +190,70 @@ public class CardsManager : MonoBehaviour
     public void FlipCard()
     {
 
-        //Flip Visual
-        foreach (GameObject cardObject in cardsLayoutGroup.Cards)
+        if(_flipChance > 0)
         {
-            foreach(Transform cardFace in CardVisualLayout.transform)
+            //Flip Visual
+            foreach (GameObject cardObject in cardsLayoutGroup.Cards)
             {
-                if (cardFace.GetComponent<CardFace>().target == cardObject)
+                foreach (Transform cardFace in CardVisualLayout.transform)
                 {
-                    Vector3 cardTransformScale = cardFace.transform.localScale;
-                    cardTransformScale.x *= -1;
-                    cardFace.transform.localScale = cardTransformScale;
+                    if (cardFace.GetComponent<CardFace>().target == cardObject)
+                    {
+                        Vector3 cardTransformScale = cardFace.transform.localScale;
+                        cardTransformScale.x *= -1;
+                        cardFace.transform.localScale = cardTransformScale;
+                    }
                 }
             }
+
+            //Flip Code
+            foreach (GameObject cardObject in cardsLayoutGroup.Cards)
+            {
+                Card card = cardObject.GetComponentInChildren<Card>();
+                char firstCode = card.cardCode[0];
+                char LastCode = card.cardCode[card.cardCode.Length - 1];
+
+                char newFirstCode = LastCode;
+                char newLastCode = firstCode;
+
+                if (card.cardCode.Length > 2)
+                {
+                    string betweenCode = card.cardCode.Substring(1, card.cardCode.Length - 2);
+
+
+
+                    card.cardCode = newFirstCode.ToString() + betweenCode.ToString() + newLastCode.ToString();
+                }
+                else
+                {
+                    card.cardCode = newFirstCode.ToString() + newLastCode.ToString();
+                }
+            }
+
+            _flipChance--;
         }
-
-
-        foreach (GameObject cardObject in cardsLayoutGroup.Cards)
+        else
         {
-            Card card = cardObject.GetComponentInChildren<Card>();
-            char firstCode = card.cardCode[0];
-            char LastCode = card.cardCode[card.cardCode.Length - 1];
+            Debug.Log("No flip chance left");
+        }
+    }
 
-            char newFirstCode = LastCode;
-            char newLastCode = firstCode;
-
-            if (card.cardCode.Length > 2)
+    public void RedrawCard()
+    {
+        if(_redrawChance > 0)
+        {
+            foreach (GameObject cardObject in cardsLayoutGroup.Cards)
             {
-                string betweenCode = card.cardCode.Substring(1, card.cardCode.Length - 2);
-
-                
-
-                card.cardCode = newFirstCode.ToString() + betweenCode.ToString() + newLastCode.ToString();
+                MoveCardToDiscard(cardObject);
             }
-            else
-            {
-                card.cardCode = newFirstCode.ToString() + newLastCode.ToString();
-            }
+            cardsLayoutGroup.Cards.Clear();
+            DrawCard();
+
+            _redrawChance--;
+        }
+        else
+        {
+            Debug.Log("No redraw chance left");
         }
     }
 

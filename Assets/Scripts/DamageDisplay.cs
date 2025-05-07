@@ -4,15 +4,17 @@ using UnityEngine.UI;
 public class DamageDisplay : MonoBehaviour
 {
     private CardsManager cardsManager;
-    [SerializeField] private Text damageDisplay;
+    private Text damageDisplay;
     private int damage;
     private int damageMult;
     private int damageResult;
 
-    void Start()
+    private void Awake()
     {
-        cardsManager = GetComponent<CardsManager>();
+        damageDisplay = GetComponent<Text>();
+        cardsManager = Canvas.FindAnyObjectByType<CardsManager>();
     }
+
     void Update()
     {
         damage = cardsManager.damage;

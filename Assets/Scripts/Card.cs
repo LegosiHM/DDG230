@@ -20,7 +20,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public string cardCode; //card code based on cardFace
 
-    private void Start()
+    private void Awake()
     {
         cardCode = cardCode.ToLower();
 
