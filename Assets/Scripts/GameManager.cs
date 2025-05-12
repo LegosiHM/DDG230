@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private ResultManager ratingStar;  // Drag the RatingStar object here
-    [SerializeField] private GameObject resultsPanel; // Drag the ResultsPanel here
+    [SerializeField] private ResultManager ratingStar;
+    [SerializeField] private GameObject resultsPanel;
 
     public void LevelCompleted()
     {
@@ -16,4 +17,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void RetryLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void GoToStageSelect()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("StageSelect"); // Ensure the scene name matches exactly
+    }
+
+    public void GoToNextStage()
+    {
+        Time.timeScale = 1f;
+
+        // Replace this with your actual next scene logic
+        string current = SceneManager.GetActiveScene().name;
+
+        if (current == "Stage1") SceneManager.LoadScene("Stage2");
+        else if (current == "Stage2") SceneManager.LoadScene("Stage3");
+        else SceneManager.LoadScene("StageSelect"); // Fallback
+    }
 }
