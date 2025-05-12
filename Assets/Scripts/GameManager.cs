@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
 
     public void RetryLevel()
     {
+        if (resultsPanel != null)
+            resultsPanel.SetActive(false);
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

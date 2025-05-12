@@ -24,6 +24,8 @@ public class PauseManager : MonoBehaviour
 
     public void Retry()
     {
+        if (pauseMenuUI != null)
+            pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
