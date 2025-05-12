@@ -32,7 +32,7 @@ public class BGMManager : MonoBehaviour
         {
             PlayMainMenuBGM();
         }
-        else if (sceneName == "SampleScene")
+        else if (sceneName == "Stage1" || sceneName == "Stage2" || sceneName == "Stage3" || sceneName == "SampleScene")
         {
             PlayCombatBGM();
         }
