@@ -60,15 +60,8 @@ public class CardsManager : MonoBehaviour
 
     public void DrawCard()
     {
-        if(CardPool.Count <= _maxCardOnHand - cardsLayoutGroup.transform.childCount)
-        {
-            ResetPool();
-            AddCard();
-        }
-        else
-        {
-            AddCard();
-        }
+        ResetPool();
+        AddCard();
     }
 
     public void AddCard()
@@ -88,6 +81,7 @@ public class CardsManager : MonoBehaviour
 
                 int randomCard = Random.Range(0, CardPool.Count);
 
+
                 GameObject cardFace = Instantiate(CardPool[randomCard], CardVisualLayout.transform);
 
                 cardFace.GetComponent<CardFace>().target = card.GetComponentInChildren<Card>().gameObject;
@@ -104,6 +98,8 @@ public class CardsManager : MonoBehaviour
 
     public void ResetPool()
     {
+        if (CardPool.Count <= _maxCardOnHand - cardsLayoutGroup.transform.childCount)
+        {
             while (i < fullCardPool && DiscardPool.Count > 0) //reset pool
             {
                 //Debug.Log("ResetPool");
@@ -113,6 +109,8 @@ public class CardsManager : MonoBehaviour
             }
 
             i = 0;
+
+        }
     }
 
     public void CalculateDMG()
