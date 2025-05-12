@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -77,6 +77,14 @@ public class CardsManager : MonoBehaviour
             {
                 GameObject card = Instantiate(CardParent, cardsLayoutGroup.transform);
 
+                if (SoundManager.Instance != null)
+                {
+                    float pitch = 1f + (cardsLayoutGroup.Cards.Count * 0.05f);
+                    pitch = Mathf.Clamp(pitch, 1f, 1.5f);
+                    SoundManager.Instance.PlayCardAdd(pitch);
+                }
+
+
 
                 int randomCard = Random.Range(0, CardPool.Count);
 
@@ -141,7 +149,12 @@ public class CardsManager : MonoBehaviour
     {
         if(cardsPlayedPile.Cards.Count > 0)
         {
-            if(cardsPlayedPile.Cards.Count > 1) //more than 1 card played
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySpellCast();
+            }
+
+            if (cardsPlayedPile.Cards.Count > 1) //more than 1 card played
             {
                 foreach (GameObject cardObject in cardsPlayedPile.Cards)
                 {
@@ -189,10 +202,9 @@ public class CardsManager : MonoBehaviour
 
     public void FlipCard()
     {
-
-        if(_flipChance > 0)
+        if (_flipChance > 0)
         {
-            //Flip Visual
+            // 1. Flip Visual
             foreach (GameObject cardObject in cardsLayoutGroup.Cards)
             {
                 foreach (Transform cardFace in CardVisualLayout.transform)
@@ -206,28 +218,31 @@ public class CardsManager : MonoBehaviour
                 }
             }
 
-            //Flip Code
+            // 2. Flip Code
             foreach (GameObject cardObject in cardsLayoutGroup.Cards)
             {
                 Card card = cardObject.GetComponentInChildren<Card>();
                 char firstCode = card.cardCode[0];
-                char LastCode = card.cardCode[card.cardCode.Length - 1];
+                char lastCode = card.cardCode[card.cardCode.Length - 1];
 
-                char newFirstCode = LastCode;
+                char newFirstCode = lastCode;
                 char newLastCode = firstCode;
 
                 if (card.cardCode.Length > 2)
                 {
                     string betweenCode = card.cardCode.Substring(1, card.cardCode.Length - 2);
-
-
-
-                    card.cardCode = newFirstCode.ToString() + betweenCode.ToString() + newLastCode.ToString();
+                    card.cardCode = newFirstCode.ToString() + betweenCode + newLastCode.ToString();
                 }
                 else
                 {
                     card.cardCode = newFirstCode.ToString() + newLastCode.ToString();
                 }
+            }
+
+            // 🔊 Play Flip SFX and decrement
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayCardFlip();
             }
 
             _flipChance--;
@@ -237,6 +252,7 @@ public class CardsManager : MonoBehaviour
             Debug.Log("No flip chance left");
         }
     }
+
 
     public void RedrawCard()
     {

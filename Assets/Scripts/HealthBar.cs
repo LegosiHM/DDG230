@@ -34,21 +34,45 @@ public class HealthBar : MonoBehaviour
         if (gameObject.transform.name.Contains("Player"))
         {
             damage = enemyManager.damage;
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayPlayerHit();
+            }
+
             //Debug.Log("playerTakeDMG"+ "damage = " + enemyManager.damage + " Turn = " + enemyManager.turn);
         }
         if (gameObject.transform.name.Contains("Enemy"))
         {
             //Debug.Log("enemyTakeDMG: " + cardsManager.damageResult);
             damage = cardsManager.damageResult;
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayEnemyHit();
+            }
+
         }
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         //Debug.Log(currentHealth);
 
         UpdateHealthBar();
+
+        if (currentHealth <= 0 && gameObject.transform.name.Contains("Player"))
+        {
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayPlayerLose();
+            }
+
+            // Optional: trigger defeat UI or logic here
+            Debug.Log("Player Defeated");
+        }
+
     }
 
-    
+
     private void UpdateHealthBar()
     {
         hpFill.fillAmount = currentHealth/maxHealth;

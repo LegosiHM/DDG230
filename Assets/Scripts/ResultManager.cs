@@ -10,6 +10,12 @@ public class ResultManager : MonoBehaviour
     [Header("Enemies to Track")]
     [SerializeField] private List<HealthBar> enemyHealthBars = new List<HealthBar>();  // Drag all your enemy HealthBars here manually.
 
+    [Header("Star Sounds")]
+    [SerializeField] private AudioClip star1SFX;
+    [SerializeField] private AudioClip star2SFX;
+    [SerializeField] private AudioClip star3SFX;
+
+
     public void CalculateAndShowStars()
     {
         float totalEnemyHealth = 0f;
@@ -39,17 +45,20 @@ public class ResultManager : MonoBehaviour
             stars[0].SetActive(true);
             stars[1].SetActive(true);
             stars[2].SetActive(true);
+            SoundManager.Instance.sfxSource.PlayOneShot(star3SFX);
             Debug.Log("3 Stars Achieved!");
         }
         else if (damagePercentage >= 50f)
         {
             stars[0].SetActive(true);
             stars[1].SetActive(true);
+            SoundManager.Instance.sfxSource.PlayOneShot(star2SFX);
             Debug.Log("2 Stars Achieved!");
         }
         else if (damagePercentage >= 30f)
         {
             stars[0].SetActive(true);
+            SoundManager.Instance.sfxSource.PlayOneShot(star1SFX);
             Debug.Log("1 Star Achieved!");
         }
         else

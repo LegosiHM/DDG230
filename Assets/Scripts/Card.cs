@@ -209,6 +209,15 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         cardsManager.cardsLayoutGroup.Cards.Remove(gameObject);
 
         cardsPlayedPile.Cards.Add(gameObject);
+
+        if (SoundManager.Instance != null)
+        {
+            int cardCount = cardsPlayedPile.Cards.Count;
+            float pitch = 1f + (cardCount - 1) * 0.1f;
+            pitch = Mathf.Clamp(pitch, 1f, 2f);
+            SoundManager.Instance.PlayCardSelect(pitch);
+        }
+
     }
 
     public void MoveCardToHand()
@@ -225,6 +234,15 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         cardsPlayedPile.Cards.Remove(gameObject);
         cardsManager.cardsLayoutGroup.Cards.Add(gameObject);
+
+        if (SoundManager.Instance != null)
+        {
+            int cardsLeft = cardsPlayedPile.Cards.Count;
+            float pitch = 1f + cardsLeft * 0.05f;
+            pitch = Mathf.Clamp(pitch, 1f, 1.5f);
+            SoundManager.Instance.PlayCardDeselect(pitch);
+        }
+
 
     }
 

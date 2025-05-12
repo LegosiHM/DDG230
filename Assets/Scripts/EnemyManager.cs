@@ -32,7 +32,12 @@ public class EnemyManager : MonoBehaviour
         damage = 0;
         enemyMoveset[turn-1].Invoke();
 
-        if(HoldLockedCard == true)
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayEnemyAttack();
+        }
+
+        if (HoldLockedCard == true)
         {
             Debug.Log(HoldLockedCard);
             turnWithLockedCard++;
@@ -71,6 +76,12 @@ public class EnemyManager : MonoBehaviour
 
                 randomCard.GetComponent<Card>().IsLockedByEnemy = true;
                 randomCard.GetComponent<Card>().MoveCardToPlay();
+
+                if (SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.PlayEnemyLock();
+                }
+
             }
             else
             {

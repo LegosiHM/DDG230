@@ -7,7 +7,13 @@ public class GameManager : MonoBehaviour
 
     public void LevelCompleted()
     {
-        resultsPanel.SetActive(true); // Show the results panel
-        ratingStar.CalculateAndShowStars(); // Calculate damage and show stars
+        resultsPanel.SetActive(true);
+        ratingStar.CalculateAndShowStars();
+
+        if (BGMManager.Instance != null)
+        {
+            BGMManager.Instance.PlayResultBGM();
+        }
     }
+
 }
