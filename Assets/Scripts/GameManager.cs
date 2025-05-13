@@ -32,9 +32,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("StageSelect"); // Ensure the scene name matches exactly
     }
 
-    public void GoToNextStage()
+    public void GoToNextStage(string NextStage)
     {
         Time.timeScale = 1f;
+        SceneManager.LoadScene(NextStage);
 
         // Replace this with your actual next scene logic
         string current = SceneManager.GetActiveScene().name;

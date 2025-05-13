@@ -96,13 +96,34 @@ public class CardsManager : MonoBehaviour
             i = 0;
     }
 
+    public void AddOneCard()
+    {
+        GameObject card = Instantiate(CardParent, cardsLayoutGroup.transform);
+
+        if (SoundManager.Instance != null)
+        {
+            float pitch = 1f + (cardsLayoutGroup.Cards.Count * 0.05f);
+            pitch = Mathf.Clamp(pitch, 1f, 1.5f);
+            SoundManager.Instance.PlayCardAdd(pitch);
+        }
+
+        int randomCard = Random.Range(0, CardPool.Count);
+        GameObject cardFace = Instantiate(CardPool[randomCard], CardVisualLayout.transform);
+
+        cardFace.GetComponent<CardFace>().target = card.GetComponentInChildren<Card>().gameObject;
+        card.GetComponentInChildren<Card>().cardCode = cardFace.GetComponentInChildren<CardFace>().cardCode;
+
+        DiscardPool.Add(CardPool[randomCard]);
+        CardPool.Remove(CardPool[randomCard]);
+    }
+
     public void ResetPool()
     {
         if (CardPool.Count <= _maxCardOnHand - cardsLayoutGroup.transform.childCount)
         {
             while (i < fullCardPool && DiscardPool.Count > 0) //reset pool
             {
-                //Debug.Log("ResetPool");
+                Debug.Log("ResetPool");
                 CardPool.Add(DiscardPool[0]);
                 DiscardPool.RemoveAt(0);
                 i++;
@@ -145,7 +166,9 @@ public class CardsManager : MonoBehaviour
 
     public void PlayCard()
     {
-        if(cardsPlayedPile.Cards.Count > 0)
+        ResetPool();
+
+        if (cardsPlayedPile.Cards.Count > 0)
         {
             if (SoundManager.Instance != null)
             {
@@ -254,14 +277,24 @@ public class CardsManager : MonoBehaviour
 
     public void RedrawCard()
     {
+        int count = 0;
+
         if(_redrawChance > 0)
         {
             foreach (GameObject cardObject in cardsLayoutGroup.Cards)
             {
                 MoveCardToDiscard(cardObject);
+                count++;
             }
             cardsLayoutGroup.Cards.Clear();
-            DrawCard();
+
+            ResetPool();
+
+            while (count > 0)
+            {
+                AddOneCard();
+                count--;
+            }
 
             _redrawChance--;
         }

@@ -7,13 +7,19 @@ public class ResultManager : MonoBehaviour
     [Header("Star UI GameObjects")]
     [SerializeField] private GameObject[] stars; // Drag Star1, Star2, Star3 here.
 
+    [Header("Player to Track")]
+    [SerializeField] private HealthBar playerHealthBar;
+
     [Header("Enemies to Track")]
     [SerializeField] private List<HealthBar> enemyHealthBars = new List<HealthBar>();  // Drag all your enemy HealthBars here manually.
 
     [Header("Star Sounds")]
+
     [SerializeField] private AudioClip star1SFX;
     [SerializeField] private AudioClip star2SFX;
     [SerializeField] private AudioClip star3SFX;
+
+  
 
 
     public void CalculateAndShowStars()
@@ -40,7 +46,7 @@ public class ResultManager : MonoBehaviour
         }
 
         // Show stars based on damage done
-        if (damagePercentage >= 70f)
+        if (damagePercentage >= 90f)
         {
             stars[0].SetActive(true);
             stars[1].SetActive(true);

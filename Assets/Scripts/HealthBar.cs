@@ -7,16 +7,24 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Image hpFill; //Assign the HP_Fill Image in the Inspector
     [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private GameManager gameManager;
+
     public float _maxHealth;
 
     private float currentHealth;
     public float _currentHealth;
 
 
-    [SerializeField] private CardsManager cardsManager;
-    [SerializeField] private EnemyManager enemyManager;
+    private CardsManager cardsManager;
+    private EnemyManager enemyManager;
 
-    void Start()
+    private void Awake()
+    {
+        cardsManager = Canvas.FindAnyObjectByType<CardsManager>();
+        enemyManager = Canvas.FindAnyObjectByType<EnemyManager>();
+    }
+
+    private void Start()
     {
         _maxHealth = maxHealth;
 
@@ -27,6 +35,11 @@ public class HealthBar : MonoBehaviour
     private void Update()
     {
         _currentHealth = currentHealth;
+        if(_currentHealth <= 0)
+        {
+            gameManager.LevelCompleted();
+        }
+
     }
 
     public void TakeDamage(float damage)
