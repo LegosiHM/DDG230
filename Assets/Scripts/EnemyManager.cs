@@ -88,6 +88,8 @@ public class EnemyManager : MonoBehaviour
                 randomCard.GetComponent<Card>().IsLockedByEnemy = true;
                 randomCard.GetComponent<Card>().MoveCardToPlay();
 
+                enemyAnim?.PlayHurtThenLock(0.5f);
+
                 if (SoundManager.Instance != null)
                 {
                     SoundManager.Instance.PlayEnemyLock();

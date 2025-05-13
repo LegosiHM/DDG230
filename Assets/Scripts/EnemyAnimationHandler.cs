@@ -41,4 +41,22 @@ public class EnemyAnimationHandler : MonoBehaviour
         animator.SetTrigger("Attack");
         SoundManager.Instance?.PlayEnemyAttack();
     }
+    public void PlayHurtThenLock(float delay = 0.5f)
+    {
+        StartCoroutine(HurtThenLock(delay));
+    }
+
+    private IEnumerator HurtThenLock(float delay)
+    {
+        animator.ResetTrigger("Lock");
+        animator.SetTrigger("Hurt");
+
+        SoundManager.Instance?.PlayEnemyHit();
+
+        yield return new WaitForSeconds(delay);
+
+        animator.SetTrigger("Lock");
+        SoundManager.Instance?.PlayEnemyLock();
+    }
+
 }
