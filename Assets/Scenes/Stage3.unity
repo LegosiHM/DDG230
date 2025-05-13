@@ -250,8 +250,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpFill: {fileID: 308157392}
   maxHealth: 350
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 2139645654}
   playerPortrait: {fileID: 0}
+  isPlayerHealthBar: 0
   _maxHealth: 0
   _currentHealth: 0
 --- !u!114 &116081791
@@ -4666,6 +4667,7 @@ MonoBehaviour:
   maxHealth: 50
   gameManager: {fileID: 2139645654}
   playerPortrait: {fileID: 1162382655}
+  isPlayerHealthBar: 1
   _maxHealth: 0
   _currentHealth: 0
 --- !u!114 &1485829584
@@ -7006,6 +7008,7 @@ GameObject:
   - component: {fileID: 2139645655}
   - component: {fileID: 2139645654}
   - component: {fileID: 2139645656}
+  - component: {fileID: 2139645657}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -7055,6 +7058,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 152750094}
+--- !u!114 &2139645657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139645653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e31042f5664e95d4ebd48df121086210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8507896633176323604
 PrefabInstance:
   m_ObjectHideFlags: 0

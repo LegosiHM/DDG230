@@ -5,6 +5,13 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private ResultManager ratingStar;
     [SerializeField] private GameObject resultsPanel;
+    private SaveManager saveManager;
+
+
+    public void Start()
+    {
+        saveManager = GetComponent<SaveManager>();
+    }
 
     public void LevelCompleted()
     {
@@ -15,6 +22,9 @@ public class GameManager : MonoBehaviour
         {
             BGMManager.Instance.PlayResultBGM();
         }
+
+        saveManager.SaveData();
+        Debug.Log("Gave Saved");
     }
 
     public void RetryLevel()
@@ -36,12 +46,5 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(NextStage);
-
-        // Replace this with your actual next scene logic
-        string current = SceneManager.GetActiveScene().name;
-
-        if (current == "Stage1") SceneManager.LoadScene("Stage2");
-        else if (current == "Stage2") SceneManager.LoadScene("Stage3");
-        else SceneManager.LoadScene("StageSelect"); // Fallback
     }
 }
