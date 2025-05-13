@@ -15,6 +15,10 @@ public class EnemyManager : MonoBehaviour
     [HideInInspector] public int turnWithLockedCard = 1;
     [HideInInspector] public bool HoldLockedCard = false;
 
+    [SerializeField] private GameObject activeEnemy;
+    private EnemyAnimationHandler enemyAnim;
+
+
     private CardsLayoutGroup cardsLayoutGroup;
     private CardsManager cardsManager;
     private CardsPlayedPile cardsPlayedPile;
@@ -26,11 +30,18 @@ public class EnemyManager : MonoBehaviour
         cardsManager = Canvas.FindAnyObjectByType<CardsManager>();
         cardsPlayedPile = Canvas.FindAnyObjectByType<CardsPlayedPile>();
     }
+    void Start()
+    {
+        enemyAnim = activeEnemy.GetComponent<EnemyAnimationHandler>();
+    }
+
 
     public void TurnAttack()
     {
         damage = 0;
         enemyMoveset[turn-1].Invoke();
+
+        enemyAnim?.PlayHurtThenAttack(0.5f);
 
         if (SoundManager.Instance != null)
         {

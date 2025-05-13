@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,11 +53,11 @@ public class HealthBar : MonoBehaviour
                 SoundManager.Instance.PlayPlayerHit();
             }
 
-            //Debug.Log("playerTakeDMG"+ "damage = " + enemyManager.damage + " Turn = " + enemyManager.turn);
+            // Player damage logic here (no animation unless you want one)
         }
+
         if (gameObject.transform.name.Contains("Enemy"))
         {
-            //Debug.Log("enemyTakeDMG: " + cardsManager.damageResult);
             damage = cardsManager.damageResult;
 
             if (SoundManager.Instance != null)
@@ -65,25 +65,33 @@ public class HealthBar : MonoBehaviour
                 SoundManager.Instance.PlayEnemyHit();
             }
 
+
         }
+
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        //Debug.Log(currentHealth);
-
         UpdateHealthBar();
 
-        if (currentHealth <= 0 && gameObject.transform.name.Contains("Player"))
+        if (currentHealth <= 0)
         {
-            if (SoundManager.Instance != null)
+            if (gameObject.transform.name.Contains("Player"))
             {
-                SoundManager.Instance.PlayPlayerLose();
+                if (SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.PlayPlayerLose();
+                }
+
+                Debug.Log("Player Defeated");
             }
 
-            // Optional: trigger defeat UI or logic here
-            Debug.Log("Player Defeated");
+            if (gameObject.transform.name.Contains("Enemy"))
+            {
+                // 💀 Play Death animation
+                GetComponent<EnemyAnimationHandler>()?.PlayDeath();
+            }
         }
-
     }
+
 
 
     private void UpdateHealthBar()
