@@ -74,7 +74,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void SelectCard()
     {
-        if (IsDragging == false)
+        if (IsDragging == false && Played == false)
         {
             //Debug.Log(cardCode);
             if (cardsPlayedPile.Cards.Count > 0)

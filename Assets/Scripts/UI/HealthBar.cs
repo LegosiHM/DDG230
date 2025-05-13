@@ -14,10 +14,10 @@ public class HealthBar : MonoBehaviour
 
     private Coroutine flashRoutine;
 
-    public float _maxHealth;
+    public float _maxHealth => maxHealth;
 
     private float currentHealth;
-    public float _currentHealth;
+    public float _currentHealth => currentHealth;
 
 
     private CardsManager cardsManager;
@@ -31,17 +31,10 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
-        _maxHealth = maxHealth;
-
         currentHealth = maxHealth;
         UpdateHealthBar();
     }
 
-    private void Update()
-    {
-        _currentHealth = currentHealth;
-
-    }
 
     public void TakeDamage(float damage)
     {

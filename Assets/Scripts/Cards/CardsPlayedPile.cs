@@ -13,7 +13,6 @@ public class CardsPlayedPile : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     private void Update()
     {
-
         if (cardsManager.SelectedCard)
             SelectedCard = cardsManager.SelectedCard;
         else

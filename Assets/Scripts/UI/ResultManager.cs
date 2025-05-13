@@ -30,8 +30,8 @@ public class ResultManager : MonoBehaviour
             float damageTaken = enemy.GetDamageTaken();
             Debug.Log(enemy.gameObject.name + " Damage Taken: " + damageTaken + " / Max Health: " + enemy._maxHealth);
 
-            totalEnemyHealth += enemy._maxHealth;
-            totalDamageDone += damageTaken;
+            totalEnemyHealth = enemy._maxHealth;
+            totalDamageDone = damageTaken;
         }
 
         float damagePercentage = (totalDamageDone / totalEnemyHealth) * 100f;
