@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ResultManager : MonoBehaviour
 {
@@ -53,6 +55,7 @@ public class ResultManager : MonoBehaviour
             stars[2].SetActive(true);
             SoundManager.Instance.sfxSource.PlayOneShot(star3SFX);
             Debug.Log("3 Stars Achieved!");
+            CollectStageStar(3);
         }
         else if (damagePercentage >= 50f)
         {
@@ -60,16 +63,49 @@ public class ResultManager : MonoBehaviour
             stars[1].SetActive(true);
             SoundManager.Instance.sfxSource.PlayOneShot(star2SFX);
             Debug.Log("2 Stars Achieved!");
+            CollectStageStar(2);
         }
         else if (damagePercentage >= 30f)
         {
             stars[0].SetActive(true);
             SoundManager.Instance.sfxSource.PlayOneShot(star1SFX);
             Debug.Log("1 Star Achieved!");
+            CollectStageStar(1);
         }
         else
         {
             Debug.Log("No stars earned.");
+            CollectStageStar(0);
+        }
+    }
+
+    private void CollectStageStar(int StarEarn)
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        if(currentScene == "Stage1")
+        {
+            if(ResultCollection.Stage1Star <  StarEarn)
+            {
+                ResultCollection.Stage1Star = StarEarn;
+            }
+
+            ResultCollection.Stage2Unlocked = true;
+        }
+        else if (currentScene == "Stage2")
+        {
+            if (ResultCollection.Stage2Star < StarEarn)
+            {
+                ResultCollection.Stage2Star = StarEarn;
+            }
+
+            ResultCollection.Stage3Unlocked = true;
+        }
+        else if (currentScene == "Stage3")
+        {
+            if (ResultCollection.Stage3Star < StarEarn)
+            {
+                ResultCollection.Stage3Star = StarEarn;
+            }
         }
     }
 }
