@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
@@ -18,9 +18,15 @@ public class PauseManager : MonoBehaviour
     {
         isPaused = !isPaused;
         pauseMenuUI.SetActive(isPaused);
-
         Time.timeScale = isPaused ? 0f : 1f;
+
+        // ✅ Link volume slider now that Pause Menu is active
+        if (isPaused && AudioSettingsManager.Instance != null)
+        {
+            AudioSettingsManager.Instance.TryLinkSlider();
+        }
     }
+
 
     public void Retry()
     {
