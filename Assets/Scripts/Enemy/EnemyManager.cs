@@ -149,4 +149,53 @@ public class EnemyManager : MonoBehaviour
     {
         Debug.Log("No Enemy Moveset");
     }
+
+    public void PlaySpellSequence()
+    {
+        StartCoroutine(SpellSequence());
+    }
+
+    private IEnumerator SpellSequence()
+    {
+        // 1. Cast spell sound
+        SoundManager.Instance?.PlaySpellCast();
+        yield return new WaitForSeconds(0.4f);
+
+        // 2. Enemy Hurt
+        enemyAnim?.PlayHurt();
+        SoundManager.Instance?.PlayEnemyHit();
+        yield return new WaitForSeconds(0.4f);
+
+        // 3. Enemy Action (Lock or Attack)
+        if (IsNextMoveLock())
+        {
+            enemyAnim?.PlayLock();
+            SoundManager.Instance?.PlayEnemyLock();
+        }
+        else
+        {
+            enemyAnim?.PlayAttack();
+            SoundManager.Instance?.PlayEnemyAttack();
+        }
+        yield return new WaitForSeconds(0.4f);
+
+        // 4. Player Hurt + flash
+        HealthBar[] allBars = GameObject.FindObjectsOfType<HealthBar>(true);
+        foreach (var bar in allBars)
+        {
+            if (bar.isPlayerHealthBar)
+            {
+                bar.TakeDamage(enemyBaseDMG);
+                break;
+            }
+        }
+    }
+
+    private bool IsNextMoveLock()
+    {
+        string methodName = enemyMoveset[turn - 1].GetPersistentMethodName(0);
+        return methodName == "LockCard" || methodName == "LockCardWithDMG";
+    }
+
+
 }

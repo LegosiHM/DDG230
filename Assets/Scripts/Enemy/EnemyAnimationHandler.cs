@@ -59,4 +59,10 @@ public class EnemyAnimationHandler : MonoBehaviour
         SoundManager.Instance?.PlayEnemyLock();
     }
 
+    public void PlayLock()
+    {
+        animator.SetTrigger("Lock");
+    }
+
+
 }

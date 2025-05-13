@@ -9,7 +9,8 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Image playerPortrait; // Drag your player portrait Image here
-    [SerializeField] bool isPlayerHealthBar = true;
+    [SerializeField] public bool isPlayerHealthBar = true;
+
 
     private Coroutine flashRoutine;
 
