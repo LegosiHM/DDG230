@@ -8,6 +8,8 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Image hpFill; //Assign the HP_Fill Image in the Inspector
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private Image playerPortrait; // Drag your player portrait Image here
+    private Coroutine flashRoutine;
 
     public float _maxHealth;
 
@@ -52,6 +54,11 @@ public class HealthBar : MonoBehaviour
             {
                 SoundManager.Instance.PlayPlayerHit();
             }
+
+            if (flashRoutine != null)
+                StopCoroutine(flashRoutine);
+
+            flashRoutine = StartCoroutine(FlashPortraitRed());
 
             // Player damage logic here (no animation unless you want one)
         }
@@ -102,5 +109,17 @@ public class HealthBar : MonoBehaviour
     public float GetDamageTaken()
     {
         return _maxHealth - _currentHealth;
+    }
+    private IEnumerator FlashPortraitRed()
+    {
+        if (playerPortrait == null)
+            yield break;
+
+        Color originalColor = playerPortrait.color;
+        playerPortrait.color = Color.red;
+
+        yield return new WaitForSeconds(0.7f);
+
+        playerPortrait.color = originalColor;
     }
 }

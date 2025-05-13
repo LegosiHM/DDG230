@@ -251,6 +251,7 @@ MonoBehaviour:
   hpFill: {fileID: 308157392}
   maxHealth: 350
   gameManager: {fileID: 0}
+  playerPortrait: {fileID: 0}
   _maxHealth: 0
   _currentHealth: 0
 --- !u!114 &116081791
@@ -4664,6 +4665,7 @@ MonoBehaviour:
   hpFill: {fileID: 639334864}
   maxHealth: 50
   gameManager: {fileID: 2139645654}
+  playerPortrait: {fileID: 1162382655}
   _maxHealth: 0
   _currentHealth: 0
 --- !u!114 &1485829584
