@@ -3496,7 +3496,11 @@ RectTransform:
   - {fileID: 185329949}
   - {fileID: 1485829582}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - {fileID: 1954783882}
+=======
+  - {fileID: 1162382654}
+>>>>>>> Stashed changes
 =======
   - {fileID: 1162382654}
 >>>>>>> Stashed changes
@@ -5556,7 +5560,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_LocalPosition: {x: 6.99, y: 0.41, z: 0}
+=======
+  m_LocalPosition: {x: 6.99, y: 1, z: 0}
+>>>>>>> Stashed changes
 =======
   m_LocalPosition: {x: 6.99, y: 1, z: 0}
 >>>>>>> Stashed changes
