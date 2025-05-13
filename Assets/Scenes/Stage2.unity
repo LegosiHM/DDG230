@@ -250,7 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpFill: {fileID: 308157392}
   maxHealth: 200
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 2139645654}
   playerPortrait: {fileID: 0}
   isPlayerHealthBar: 0
   _maxHealth: 0
