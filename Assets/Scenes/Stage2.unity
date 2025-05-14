@@ -261,13 +261,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: GoToStageSelect
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 755556498367735547, guid: 9afbf4a5620e11443b95303a289d696a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PauseManager, Assembly-CSharp
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     - target: {fileID: 2902594367664476346, guid: 9afbf4a5620e11443b95303a289d696a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -276,13 +273,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Retry
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 2902594367664476346, guid: 9afbf4a5620e11443b95303a289d696a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PauseManager, Assembly-CSharp
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     - target: {fileID: 8009111223387257074, guid: 9afbf4a5620e11443b95303a289d696a, type: 3}
       propertyPath: m_Name
       value: PauseMenuUI
@@ -2371,12 +2365,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 715292453}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -400, y: -225, z: 0}
-  m_LocalScale: {x: 0.41666666, y: 0.41666666, z: 0.41666666}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1662143021}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &722322021
 GameObject:
@@ -4544,7 +4538,6 @@ RectTransform:
   - {fileID: 1568206347}
   - {fileID: 54071233}
   - {fileID: 1803611169}
-  - {fileID: 715292456}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6910,6 +6903,7 @@ SceneRoots:
   - {fileID: 859333354}
   - {fileID: 737347206}
   - {fileID: 1662143021}
+  - {fileID: 715292456}
   - {fileID: 448189140}
   - {fileID: 2450114722480353074}
   - {fileID: 2590804090182541691}
