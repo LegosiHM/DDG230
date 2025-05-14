@@ -6,8 +6,6 @@ public class CardFace : MonoBehaviour
 {
     public GameObject target;
 
-    public float rotationSpeed;
-    public float rotationAmount;
     Vector3 movement;
     public string cardCode; //to check if can connect with other card
 

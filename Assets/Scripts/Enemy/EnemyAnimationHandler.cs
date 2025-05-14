@@ -4,6 +4,10 @@ using System.Collections;
 public class EnemyAnimationHandler : MonoBehaviour
 {
     private Animator animator;
+    private string AttackTrigger = "Attack";
+    private string HurtTrigger = "Hurt";
+    private string LockTrigger = "Lock";
+    private string DieTrigger = "Die";
 
     private void Awake()
     {
@@ -12,17 +16,17 @@ public class EnemyAnimationHandler : MonoBehaviour
 
     public void PlayAttack()
     {
-        animator.SetTrigger("Attack");
+        animator.SetTrigger(AttackTrigger);
     }
 
     public void PlayHurt()
     {
-        animator.SetTrigger("Hurt");
+        animator.SetTrigger(HurtTrigger);
     }
 
     public void PlayDeath()
     {
-        animator.SetTrigger("Die");
+        animator.SetTrigger(DieTrigger);
     }
 
     public void PlayHurtThenAttack(float delay = 0.5f)
@@ -32,13 +36,13 @@ public class EnemyAnimationHandler : MonoBehaviour
 
     private IEnumerator HurtThenAttack(float delay)
     {
-        animator.ResetTrigger("Attack");  // Avoid pre-triggered attack
-        animator.SetTrigger("Hurt");
+        animator.ResetTrigger(AttackTrigger);  // Avoid pre-triggered attack
+        animator.SetTrigger(HurtTrigger);
         SoundManager.Instance?.PlayEnemyHit();
 
         yield return new WaitForSeconds(delay);
 
-        animator.SetTrigger("Attack");
+        animator.SetTrigger(AttackTrigger);
         SoundManager.Instance?.PlayEnemyAttack();
     }
     public void PlayHurtThenLock(float delay = 0.5f)
@@ -48,20 +52,20 @@ public class EnemyAnimationHandler : MonoBehaviour
 
     private IEnumerator HurtThenLock(float delay)
     {
-        animator.ResetTrigger("Lock");
-        animator.SetTrigger("Hurt");
+        animator.ResetTrigger(LockTrigger);
+        animator.SetTrigger(HurtTrigger);
 
         SoundManager.Instance?.PlayEnemyHit();
 
         yield return new WaitForSeconds(delay);
 
-        animator.SetTrigger("Lock");
+        animator.SetTrigger(LockTrigger);
         SoundManager.Instance?.PlayEnemyLock();
     }
 
     public void PlayLock()
     {
-        animator.SetTrigger("Lock");
+        animator.SetTrigger(LockTrigger);
     }
 
 

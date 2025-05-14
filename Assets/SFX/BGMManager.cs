@@ -5,7 +5,8 @@ public class BGMManager : MonoBehaviour
 {
     public static BGMManager Instance;
 
-    [SerializeField] private AudioSource bgmSource;
+    public AudioSource bgmSource;
+
     [SerializeField] private AudioClip mainMenuBGM;
     [SerializeField] private AudioClip combatBGM;
     [SerializeField] private AudioClip resultBGM;
@@ -16,7 +17,7 @@ public class BGMManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded; // 🔄 Listen to scene loads
+            SceneManager.sceneLoaded += OnSceneLoaded; 
         }
         else
         {
@@ -67,6 +68,6 @@ public class BGMManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded; // 🧼 Clean up
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

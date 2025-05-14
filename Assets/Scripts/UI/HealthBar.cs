@@ -8,7 +8,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Image hpFill; //Assign the HP_Fill Image in the Inspector
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private Image playerPortrait; // Drag your player portrait Image here
+    [SerializeField] private Image playerPortrait;
     [SerializeField] public bool isPlayerHealthBar = true;
 
 
@@ -52,7 +52,6 @@ public class HealthBar : MonoBehaviour
 
             flashRoutine = StartCoroutine(FlashPortraitRed());
 
-            // Player damage logic here (no animation unless you want one)
             
         }
         else

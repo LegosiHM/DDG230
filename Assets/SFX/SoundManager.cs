@@ -8,25 +8,24 @@ public class SoundManager : MonoBehaviour
     public AudioSource sfxSource;
 
     [Header("Sound Clips")]
-    public AudioClip buttonClickClip;
-    public AudioClip cardSelectSFX;
-    public AudioClip cardDeselectSFX;
-    public AudioClip cardFlipSFX;
-    public AudioClip cardAddSFX;
-    public AudioClip spellCastSFX;
-    public AudioClip playerHitSFX;
-    public AudioClip enemyAttackSFX;
-    public AudioClip enemyLockSFX;
-    public AudioClip enemyHitSFX;
-    public AudioClip playerLoseSFX;
+    [SerializeField] private AudioClip buttonClickClip;
+    [SerializeField] private AudioClip cardSelectSFX;
+    [SerializeField] private AudioClip cardDeselectSFX;
+    [SerializeField] private AudioClip cardFlipSFX;
+    [SerializeField] private AudioClip cardAddSFX;
+    [SerializeField] private AudioClip spellCastSFX;
+    [SerializeField] private AudioClip playerHitSFX;
+    [SerializeField] private AudioClip enemyAttackSFX;
+    [SerializeField] private AudioClip enemyLockSFX;
+    [SerializeField] private AudioClip enemyHitSFX;
+    [SerializeField] private AudioClip playerLoseSFX;
 
     private void Awake()
     {
-        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Persist through scenes
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -51,7 +50,7 @@ public class SoundManager : MonoBehaviour
     {
         sfxSource.pitch = pitch;
         sfxSource.PlayOneShot(cardSelectSFX);
-        sfxSource.pitch = 1f; // reset pitch
+        sfxSource.pitch = 1f;
     }
 
     public void PlayCardDeselect(float pitch = 1f)
@@ -63,7 +62,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlayCardFlip()
     {
-        sfxSource.pitch = 1f; // fixed pitch is fine for flip
+        sfxSource.pitch = 1f; 
         sfxSource.PlayOneShot(cardFlipSFX);
     }
 

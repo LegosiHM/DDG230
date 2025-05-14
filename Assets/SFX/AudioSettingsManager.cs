@@ -24,7 +24,6 @@ public class AudioSettingsManager : MonoBehaviour
             return;
         }
 
-        // Subscribe to scene load to re-link slider
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -69,7 +68,6 @@ public class AudioSettingsManager : MonoBehaviour
     {
         if (volumeSlider != null) return; // Already linked
 
-        // 🧠 true = include inactive objects
         Slider found = GameObject.FindObjectOfType<Slider>(true);
         if (found != null && found.gameObject.name.ToLower().Contains("volume"))
         {

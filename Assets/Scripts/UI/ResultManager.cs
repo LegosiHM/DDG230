@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 public class ResultManager : MonoBehaviour
 {
     [Header("Star UI GameObjects")]
-    [SerializeField] private GameObject[] stars; // Drag Star1, Star2, Star3 here.
+    [SerializeField] private GameObject[] stars; 
 
     [Header("Player to Track")]
     [SerializeField] private HealthBar playerHealthBar;
 
     [Header("Enemies to Track")]
-    [SerializeField] private List<HealthBar> enemyHealthBars = new List<HealthBar>();  // Drag all your enemy HealthBars here manually.
+    [SerializeField] private List<HealthBar> enemyHealthBars = new List<HealthBar>();  
 
     [Header("Star Sounds")]
 
@@ -37,13 +37,11 @@ public class ResultManager : MonoBehaviour
         float damagePercentage = (totalDamageDone / totalEnemyHealth) * 100f;
         Debug.Log("TOTAL DAMAGE PERCENTAGE = " + damagePercentage + "%");
 
-        // Hide all stars first
         foreach (GameObject star in stars)
         {
             star.SetActive(false);
         }
 
-        // Show stars based on damage done
         if (damagePercentage >= 90f)
         {
             stars[0].SetActive(true);
